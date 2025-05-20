@@ -12,6 +12,21 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      db:
+        image: postgres:latest
+        container_name: db
+        healthcheck:
+          test: pg_isready -U "${POSTGRES_USER:-postgres}" || exit 1
+          interval: 10s
+          timeout: 5s
+          retries: 5
+        environment:
+          - POSTGRES_NAME=postgres
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+        ports:
+          - '5432:5432'
     steps:
       - name: checkout
         uses: actions/checkout@v4.2.2
@@ -30,7 +45,7 @@ jobs:
           sudo mv tbls /usr/local/bin/
       - name: generate tbls doc
         run: |
-          TBLS_DSN=mysql://root:@localhost:3306/db tbls doc --rm-dist --config go/.tbls.yml
+          TBLS_DSN="postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable" tbls doc --rm-dist --config go/.tbls.ymlc --rm-dist --config go/.tbls.yml
       - name: fix tbls
         uses: dev-hato/actions-diff-pr-management@v1
         with:
