@@ -1,0 +1,28 @@
+# Go build
+/go/bin/
+/go/tmp/
+/go/pkg/
+/go/*.exe
+/go/*.exe~
+/go/*.dll
+/go/*.so
+/go/*.dylib
+/go/*.test
+/go/coverage.out
+
+# Dependency directories
+/go/vendor/
+
+# Editor & OS files
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Air config & tmp
+/go/.air.toml
+/tmp/

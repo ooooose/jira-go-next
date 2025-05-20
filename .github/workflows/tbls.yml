@@ -1,0 +1,47 @@
+name: tbls-generate
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  gen:
+    name: Generate tbls
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      db:
+        image: postgres:latest
+        env:
+          POSTGRES_NAME: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4.2.2
+      - name: setup go
+        uses: actions/setup-go@v5.1.0
+        with:
+          go-version-file: go/go.mod
+          cache: false
+          check-latest: true
+        id: setup-go
+      - name: ensure go.mod is tidied
+        run: cd go && go mod tidy
+      - name: install tbls
+        run: |
+          curl -L https://github.com/k1LoW/tbls/releases/download/v1.70.0/tbls_v1.70.0_linux_amd64.tar.gz | tar xz
+          sudo mv tbls /usr/local/bin/
+      - name: generate tbls doc
+        run: |
+          TBLS_DSN="postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable" tbls doc --rm-dist --config .tbls.yml
+      - name: fix tbls
+        uses: dev-hato/actions-diff-pr-management@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          branch-name-prefix: fix-tbls
