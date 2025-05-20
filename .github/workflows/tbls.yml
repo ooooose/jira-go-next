@@ -26,7 +26,7 @@ jobs:
         run: cd go && go mod tidy
       - name: install tbls
         run: |
-          curl -L https://github.com/k1LoW/tbls/releases/latest/download/tbls_linux_amd64.tar.gz | tar xz
+          curl -L https://github.com/k1LoW/tbls/releases/download/v1.70.0/tbls_linux_amd64.tar.gz | tar xz
           sudo mv tbls /usr/local/bin/
       - name: generate tbls doc
         run: |
