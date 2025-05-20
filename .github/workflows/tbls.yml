@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-go@v5.1.0
         with:
           go-version-file: go/go.mod
-          cache: true
+          cache: false
           check-latest: true
         id: setup-go
       - name: ensure go.mod is tidied
