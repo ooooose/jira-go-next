@@ -30,7 +30,7 @@ jobs:
           sudo mv tbls /usr/local/bin/
       - name: generate tbls doc
         run: |
-          TBLS_DSN=mysql://root:@localhost:3306/db tbls doc --rm-dist --config .tbls.yml
+          TBLS_DSN=mysql://root:@localhost:3306/db tbls doc --rm-dist --config go/.tbls.yml
       - name: fix tbls
         uses: dev-hato/actions-diff-pr-management@v1
         with:
