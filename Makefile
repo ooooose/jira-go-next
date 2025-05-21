@@ -14,7 +14,7 @@ logs:
 	docker compose logs -f go
 
 lint:
-	docker compose run --rm go golint .
+	docker compose run --rm go golint ./...
 
 fmt:
 	docker compose run --rm go gofmt -w .
