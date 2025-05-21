@@ -1,0 +1,33 @@
+name: gofmt
+
+on:
+  pull_request:
+    paths:
+      - 'go/**/*.go'
+      - '.github/workflows/fmt.yml'
+  push:
+    paths:
+      - 'go/**/*.go'
+      - '.github/workflows/fmt.yml'
+
+jobs:
+  gofmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go/go.mod
+
+      - name: Check gofmt
+        run: |
+          cd go
+          fmtres=$(gofmt -l .)
+          if [ -n "$fmtres" ]; then
+            echo "The following files are not formatted:"
+            echo "$fmtres"
+            exit 1
+          fi
