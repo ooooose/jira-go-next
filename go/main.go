@@ -1,17 +1,16 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/labstack/echo/v4"
+	"github.com/ooooose/jira_go/config"
+	"github.com/ooooose/jira_go/router"
+	"github.com/ooooose/jira_go/util"
 )
 
 func main() {
-	e := echo.New()
-	e.GET("/health", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{
-			"status": "ok",
-		})
-	})
-	e.Logger.Fatal(e.Start(":8080"))
+	cfg := config.Load()
+
+	util.InitDB(cfg)
+
+	e := router.NewRouter(cfg)
+	e.Logger.Fatal(e.Start(":" + cfg.Port))
 }
