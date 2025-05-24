@@ -5,13 +5,12 @@ import (
 )
 
 type Config struct {
-    Port     string
-    Database struct {
-        Driver string
-        DSN    string
-    }
+	Port     string
+	Database struct {
+		Driver string
+		DSN    string
+	}
 }
-
 
 func Load() *Config {
 	viper.SetConfigName("config")
