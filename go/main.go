@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/ooooose/jira_go/config"
+	"github.com/ooooose/jira_go/model"
 	"github.com/ooooose/jira_go/router"
 	"github.com/ooooose/jira_go/util"
-	"github.com/ooooose/jira_go/model"
 )
 
 func main() {
