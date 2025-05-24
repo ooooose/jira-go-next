@@ -3,14 +3,14 @@ package service
 import "github.com/ooooose/jira_go/repository"
 
 type IssueInput struct {
-    Title       string `json:"title"`
-    Description string `json:"description"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
 }
 
 func GetIssues() []repository.Issue {
-    return repository.FindAllIssues()
+	return repository.FindAllIssues()
 }
 
 func CreateIssue(input IssueInput) (repository.Issue, error) {
-    return repository.SaveIssue(input.Title, input.Description)
+	return repository.SaveIssue(input.Title, input.Description)
 }

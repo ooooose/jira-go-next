@@ -7,10 +7,10 @@ import (
 )
 
 func NewRouter(cfg *config.Config) *echo.Echo {
-    e := echo.New()
+	e := echo.New()
 
-    e.GET("/issues", handler.GetIssues)
-    e.POST("/issues", handler.CreateIssue)
+	e.GET("/issues", handler.GetIssues)
+	e.POST("/issues", handler.CreateIssue)
 
-    return e
+	return e
 }
