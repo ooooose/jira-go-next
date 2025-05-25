@@ -1,14 +1,19 @@
 package handler
 
 import (
-	"github.com/ooooose/jira_go/service"
 	"net/http"
 
+	"github.com/ooooose/jira_go/service"
+
 	"github.com/labstack/echo/v4"
+	"github.com/ooooose/jira_go/util"
 )
 
 func GetIssues(c echo.Context) error {
-	issues := service.GetIssues()
+	issues, err := service.GetIssues(util.DB)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
 	return c.JSON(http.StatusOK, issues)
 }
 
@@ -18,7 +23,7 @@ func CreateIssue(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	issue, err := service.CreateIssue(input)
+	issue, err := service.CreateIssue(util.DB, input)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
