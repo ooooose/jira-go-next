@@ -23,7 +23,7 @@ services:
       timeout: 5s
       retries: 5
     environment:
-      - POSTGRES_NAME=postgres
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:

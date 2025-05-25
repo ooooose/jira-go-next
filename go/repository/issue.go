@@ -1,25 +1,21 @@
 package repository
 
-type Issue struct {
-	ID          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-}
+import (
+	"github.com/ooooose/jira_go/model"
+	"gorm.io/gorm"
+)
 
-var issues = []Issue{
-	{ID: 1, Title: "Initial Issue", Description: "This is the first issue."},
-}
-
-func FindAllIssues() []Issue {
-	return issues
-}
-
-func SaveIssue(title, description string) (Issue, error) {
-	issue := Issue{
-		ID:          len(issues) + 1,
+func SaveIssue(db *gorm.DB, title, description string, status model.IssueStatus, priority model.IssuePriority, asigneeId, reporterId uint) (*model.Issue, error) {
+	issue := &model.Issue{
 		Title:       title,
 		Description: description,
+		Status:      status,
+		Priority:    priority,
+		AsigneeId:   asigneeId,
+		ReporterId:  reporterId,
 	}
-	issues = append(issues, issue)
+	if err := db.Create(issue).Error; err != nil {
+		return nil, err
+	}
 	return issue, nil
 }
