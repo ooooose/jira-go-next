@@ -1,18 +1,18 @@
 package service
 
 import (
-	"github.com/ooooose/jira_go/repository"
 	"github.com/ooooose/jira_go/model"
+	"github.com/ooooose/jira_go/repository"
 	"gorm.io/gorm"
 )
 
 type IssueInput struct {
-    Title       string `json:"title"`
-    Description string `json:"description"`
-    Status      model.IssueStatus
-    Priority    model.IssuePriority
-    AsigneeId   uint
-    ReporterId  uint
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Status      model.IssueStatus
+	Priority    model.IssuePriority
+	AsigneeId   uint
+	ReporterId  uint
 }
 
 func GetIssues(db *gorm.DB) ([]model.Issue, error) {
@@ -25,12 +25,12 @@ func GetIssues(db *gorm.DB) ([]model.Issue, error) {
 
 func CreateIssue(db *gorm.DB, input IssueInput) (*model.Issue, error) {
 	return repository.SaveIssue(
-			db,
-			input.Title,
-			input.Description,
-			input.Status,
-			input.Priority,
-			input.AsigneeId,
-			input.ReporterId,
+		db,
+		input.Title,
+		input.Description,
+		input.Status,
+		input.Priority,
+		input.AsigneeId,
+		input.ReporterId,
 	)
 }
